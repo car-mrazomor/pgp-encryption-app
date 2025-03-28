@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <title>PGP Encryption</title>
+        <meta property="og:title" content="PGP Encryption" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="/static/css/app.css" rel="stylesheet">
+        <script src="/static/js/app.js"></script>
+        <meta name="description" content="This is simple tool to encrypt / decrypt data using PGP encryption system!">
+        <meta name="keywords" content="">
+        <link rel="canonical" href="https://.li">
+        <meta property="og:url" content="https://.li" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="This is simple tool to encrypt / decrypt data using PGP encryption system!" />
+        <meta property="og:image" content="/images/logo_icon.png" />
+        <meta property="og:site_name" content="" />
+        <meta name="keywords" content="" />
+        <link rel="canonical" href="https://.li" />
+        <link rel="stylesheet" href="/static/css/main.css">
+    </head>
+    <body>
+        <div class="container">
+            <p></p>
+            <div class="container simg d-flex align-items-end d-none d-md-block">
+                <img alt=" Logo" id="color_theme_1" style="height: 200px;" src="/logo_icon.png">
+                <h1 class="title">&nbsp; — PGP</h1>
+            </div>
+            <div class="container-fluid">
+                <a class="navbar-brand d-md-none" href="/"><img src="/logo_icon.png" id="color_theme_2" height="30" alt=".li logo png">&nbsp; — PGP</a>
+            </div>
+            <br>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="keys-tab" data-toggle="tab" href="#generateKeys" role="tab" aria-controls="generateKeys" aria-selected="true">Keys</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="encrypt-tab" data-toggle="tab" href="#encryptData" role="tab" aria-controls="encryptData" aria-selected="false">Encrypt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="decrypt-tab" data-toggle="tab" href="#decryptData" role="tab" aria-controls="decryptData" aria-selected="false">Decrypt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="help-tab" data-toggle="tab" href="#help" role="tab" aria-controls="help" aria-selected="false">Help</a>
+                </li>
+            </ul>
+              <br>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="generateKeys" role="tabpanel" aria-labelledby="keys-tab">
+                    <div class="card">
+                      <div class="card-header">
+                        Generate Keys
+                      </div>
+                      <div class="card-body">
+                          <div id="messageId"></div>
+                          <h5 class="card-title">Generate Public and Private PEM keys</h5>
+                          <div class="mb-3">
+                              <label for="publicPem" class="form-label">Public PEM 
+                                <a href="#pbcp" id="pbcp">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                                    </svg>
+                                  </a>
+                              </label>
+                              <textarea  class="form-control" id="publicPem" name="public" rows="5" placeholder="Public PEM" disabled></textarea>
+                          </div>
+                          <div class="mb-3">
+                              <label for="privatePem" class="form-label">Private PEM 
+                                <a href="#pkcp" id="pkcp">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                                    </svg>
+                                  </a>
+                              </label>
+                              <textarea  class="form-control" id="privatePem" name="private" rows="5" placeholder="Private PEM" disabled></textarea>
+                          </div>
+                          <button onclick="callApi()" type="submit" class="btn btn-danger">Generate</button>
+                          <br>
+                        <br>
+                      </div>
+                        <div class="card-footer">
+                            Service provided for fun <a class="link-offset-2 link-underline link-underline-opacity-0" href="https://doggy.li">Doggy.li</a> &copy; 2025
+                        </div>
+                      </div>
+                </div>
+
+                <div class="tab-pane fade" id="encryptData" role="tabpanel" aria-labelledby="encrypt-tab">
+                    <div class="card">
+                      <div class="card-header">
+                        Encrypt Data
+                      </div>
+                      <div class="card-body">
+                          <div id="messageId2"></div>
+                          <h5 class="card-title">Encrypt Data using Public PEM</h5>
+                          <div class="mb-3">
+                              <label for="publicPem2" class="form-label">Public PEM</label>
+                              <textarea class="form-control" id="publicPem2" name="public2" rows="5" placeholder="Public PEM"></textarea>
+                          </div>
+                          <div class="mb-3">
+                              <label for="plain_text" class="form-label">Plain Text</label>
+                              <textarea class="form-control" id="plain_text" name="plain_text" rows="5" placeholder="Plain Text"></textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="encrypted_data_" class="form-label">Encrypted Data</label>
+                            <textarea  class="form-control" id="encrypted_data_" name="encrypted_data_" rows="5" placeholder="Encrypted Data" disabled></textarea>
+                        </div>
+                          <button onclick="encryptApi()" type="submit" class="btn btn-danger">Encrypt</button>
+                          <a href="#ecp" id="ecp" class="btn btn-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                            </svg>
+                            Copy Text
+                          </a>
+                          <br>
+                        <br>
+                      </div>
+                      <div class="card-footer">Service provided for fun <a class="link-offset-2 link-underline link-underline-opacity-0" href="https://doggy.li">Doggy.li</a> &copy; 2025</div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="decryptData" role="tabpanel" aria-labelledby="decrypt-tab">
+                    <div class="card">
+                      <div class="card-header">
+                        Decrypt Data
+                      </div>
+                      <div class="card-body">
+                          <div id="messageId3"></div>
+                          <h5 class="card-title">Decrypt Data using Private PEM</h5>
+                          <div class="mb-3">
+                              <label for="privatePem1" class="form-label">Private PEM</label>
+                              <textarea class="form-control" id="privatePem1" name="private1" rows="5" placeholder="Private PEM"></textarea>
+                          </div>
+                          <div class="mb-3">
+                              <label for="encrypted_data" class="form-label">Encrypted Data</label>
+                              <textarea class="form-control" id="encrypted_data" name="encrypted_data" rows="5" placeholder="Encrypted Data"></textarea>
+                          </div>
+                          <div class="mb-3">
+                            <label for="plain_text_" class="form-label">Plain Text</label>
+                            <textarea  class="form-control" id="plain_text_" name="plain_text_" rows="5" placeholder="Plain Text" disabled></textarea>
+                          </div>
+                          <button onclick="decryptApi()" type="submit" class="btn btn-danger">Decrypt</button>
+                          <a href="#dcp" id="dcp" class="btn btn-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                            </svg>
+                            Copy Text
+                          </a>
+                          <br>
+                        <br>
+                      </div>
+                      <div class="card-footer">Service provided for fun <a class="link-offset-2 link-underline link-underline-opacity-0" href="https://doggy.li">Doggy.li</a> &copy; 2025</div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help-tab">
+                    <div class="card">
+                        <div class="card-header">
+                          Help / Info
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title">What is PGP Encryption Tool?</h2>
+                            <p class="card-text">
+                                PGP Encryption Tool is a secure and private way to encrypt and decrypt messages using Pretty Good Privacy (PGP). PGP is a data encryption and decryption program that provides cryptographic privacy and authentication for data communication. This tool ensures that your sensitive information is protected from unauthorized access.
+                            </p>
+
+                            <br>
+                            
+                            <h2 class="card-title">How to use this tool?</h2>
+                            <p class="card-text">
+                                <strong>Step 1: Generate Keys</strong><br>
+                                Use the tool to generate a PGP key pair (public and private keys). The public key can be shared with others, while the private key should be kept secure and private.<br><br>
+                            
+                                <strong>Step 2: Encrypt a Message</strong><br>
+                                To encrypt a message, paste the recipient's public key and the message you wish to encrypt into the tool. The tool will generate an encrypted message that can only be decrypted by the recipient's private key.<br><br>
+                            
+                                <strong>Step 3: Decrypt a Message</strong><br>
+                                To decrypt a message, paste your private key and the encrypted message into the tool. The tool will decrypt the message, allowing you to read the original content.<br><br>
+                            
+                                <strong>Note:</strong> The tool does not save any keys or data to any database or file. It does not use any form of storage to save your information, ensuring complete privacy and security.
+                            </p>
+
+                            <br>
+                            
+                            <h2 class="card-title">Security and Privacy</h2>
+                            <p class="card-text">
+                                PGP Encryption Tool prioritizes your security and privacy. Here’s how:
+                                <ul>
+                                    <li><strong>No Data Storage:</strong> The tool does not save any keys, messages, or other data. All operations are performed in your browser, ensuring that no information is stored or transmitted over the internet.</li>
+                                    <li><strong>End-to-End Encryption:</strong> The tool uses PGP, which is a trusted encryption standard. Your messages are encrypted in such a way that only the intended recipient can decrypt and read them.</li>
+                                    <li><strong>Local Operations:</strong> All encryption and decryption operations are performed locally on your device. This means your data never leaves your device, providing an additional layer of security.</li>
+                                </ul>
+                            </p>
+
+                            <br>
+                            
+                            <h2 class="card-title">Need Help?</h2>
+                            <p class="card-text">
+                                If you need any assistance or have any questions about using the PGP Encryption Tool, please feel free to contact our support team at <a class="link-offset-2 link-underline link-underline-opacity-0" href="mailto:davvy@doggy.li">davvy@doggy.li</a>. We are here to help you with any issues or concerns you may have.
+                            </p>
+                        </div>
+                    <div class="card-footer">Service provided for fun <a class="link-offset-2 link-underline link-underline-opacity-0" href="https://doggy.li">Doggy.li</a> &copy; 2025</div>
+                    </div>
+                  </div>
+              </div>
+        </div>
+        <script src="/static/js/app/eo.js"></script>
+        <script src="/static/js/app/do.js"></script>
+        <script src="/static/js/app/cao.js"></script>
+        <script src="/static/js/k.js"></script>
+        <script src="/static/js/jq.js"></script>
+        <script src="/static/js/pop.js"></script>
+        <script src="/static/js/min.js"></script>
+        <br>
+        <br>
+    </body>
+</html>
